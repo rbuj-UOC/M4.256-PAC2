@@ -8,7 +8,7 @@ import { SharedService } from 'src/app/Services/shared.service';
 @Component({
   selector: 'app-posts-list',
   templateUrl: './posts-list.component.html',
-  styleUrls: ['./posts-list.component.scss'],
+  styleUrls: ['./posts-list.component.scss']
 })
 export class PostsListComponent {
   posts!: PostDTO[];
@@ -21,16 +21,18 @@ export class PostsListComponent {
     this.loadPosts();
   }
 
-  private async loadPosts(): Promise<void> {
-    let errorResponse: any;
-    const userId = this.localStorageService.get('user_id');
+  private loadPosts(): void {
+    const userId: string | null = this.localStorageService.get('user_id');
     if (userId) {
-      try {
-        this.posts = await this.postService.getPostsByUserId(userId);
-      } catch (error: any) {
-        errorResponse = error.error;
-        this.sharedService.errorLog(errorResponse);
-      }
+      this.postService.getPostsByUserId(userId).subscribe(
+        (posts: PostDTO[]) => {
+          this.posts = posts;
+        },
+        (error: any) => {
+          const errorResponse = error.error;
+          this.sharedService.errorLog(errorResponse);
+        }
+      );
     }
   }
 
@@ -42,21 +44,23 @@ export class PostsListComponent {
     this.router.navigateByUrl('/user/post/' + postId);
   }
 
-  async deletePost(postId: string): Promise<void> {
-    let errorResponse: any;
-
+  deletePost(postId: string): void {
     // show confirmation popup
-    let result = confirm('Confirm delete post with id: ' + postId + ' .');
+    const result: boolean = confirm(
+      'Confirm delete post with id: ' + postId + ' .'
+    );
     if (result) {
-      try {
-        const rowsAffected = await this.postService.deletePost(postId);
-        if (rowsAffected.affected > 0) {
-          this.loadPosts();
+      this.postService.deletePost(postId).subscribe(
+        (rowsAffected) => {
+          if (rowsAffected.affected > 0) {
+            this.loadPosts();
+          }
+        },
+        (error: any) => {
+          const errorResponse: any = error.error;
+          this.sharedService.errorLog(errorResponse);
         }
-      } catch (error: any) {
-        errorResponse = error.error;
-        this.sharedService.errorLog(errorResponse);
-      }
+      );
     }
   }
 }

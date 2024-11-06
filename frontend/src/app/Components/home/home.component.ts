@@ -10,7 +10,7 @@ import { SharedService } from 'src/app/Services/shared.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
   posts!: PostDTO[];
@@ -36,39 +36,43 @@ export class HomeComponent {
       }
     );
   }
-  private async loadPosts(): Promise<void> {
-    let errorResponse: any;
-    const userId = this.localStorageService.get('user_id');
+  private loadPosts(): void {
+    const userId: string | null = this.localStorageService.get('user_id');
     if (userId) {
       this.showButtons = true;
     }
-    try {
-      this.posts = await this.postService.getPosts();
-    } catch (error: any) {
-      errorResponse = error.error;
-      this.sharedService.errorLog(errorResponse);
-    }
+    this.postService.getPosts().subscribe(
+      (posts: PostDTO[]) => {
+        this.posts = posts;
+      },
+      (error: any) => {
+        const errorResponse = error.error;
+        this.sharedService.errorLog(errorResponse);
+      }
+    );
   }
 
-  async like(postId: string): Promise<void> {
-    let errorResponse: any;
-    try {
-      await this.postService.likePost(postId);
-      this.loadPosts();
-    } catch (error: any) {
-      errorResponse = error.error;
-      this.sharedService.errorLog(errorResponse);
-    }
+  like(postId: string): void {
+    this.postService.likePost(postId).subscribe(
+      () => {
+        this.loadPosts();
+      },
+      (error: any) => {
+        const errorResponse = error.error;
+        this.sharedService.errorLog(errorResponse);
+      }
+    );
   }
 
-  async dislike(postId: string): Promise<void> {
-    let errorResponse: any;
-    try {
-      await this.postService.dislikePost(postId);
-      this.loadPosts();
-    } catch (error: any) {
-      errorResponse = error.error;
-      this.sharedService.errorLog(errorResponse);
-    }
+  dislike(postId: string): void {
+    this.postService.dislikePost(postId).subscribe(
+      () => {
+        this.loadPosts();
+      },
+      (error: any) => {
+        const errorResponse = error.error;
+        this.sharedService.errorLog(errorResponse);
+      }
+    );
   }
 }

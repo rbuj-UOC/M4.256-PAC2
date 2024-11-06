@@ -1,4 +1,4 @@
-<h2>Post List</h2>
+<h1>Post List</h1>
 <button (click)="createPost()">ADD</button>
 
 <table>
@@ -21,8 +21,8 @@
       <td>{{ post.num_dislikes }}</td>
 
       <td>
-        <button (click)="updatePost(post.postId)">UPDATE</button>
-        <button (click)="deletePost(post.postId)">DELETE</button>
+        <button (click)="updatePost(post.postId)">Update</button>
+        <button (click)="deletePost(post.postId)">Delete</button>
       </td>
     </tr>
   </tbody>

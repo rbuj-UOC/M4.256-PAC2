@@ -1,5 +1,5 @@
-<h2>Categories List</h2>
-<button (click)="createCategory()">ADD</button>
+<h1>Categories List</h1>
+<button (click)="createCategory()">Add</button>
 
 <table>
   <thead>
@@ -18,8 +18,8 @@
       <td>{{ category.description }}</td>
       <td>{{ category.css_color }}</td>
       <td>
-        <button (click)="updateCategory(category.categoryId)">UPDATE</button>
-        <button (click)="deleteCategory(category.categoryId)">DELETE</button>
+        <button (click)="updateCategory(category.categoryId)">Update</button>
+        <button (click)="deleteCategory(category.categoryId)">Delete</button>
       </td>
     </tr>
   </tbody>

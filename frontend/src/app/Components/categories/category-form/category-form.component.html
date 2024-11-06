@@ -1,4 +1,4 @@
-<div style="margin-left: auto; margin-right: auto">
+<div class="feedbackContainer">
   <p id="categoryFeedback"></p>
 </div>
 <div>
@@ -8,7 +8,7 @@
     [formGroup]="categoryForm"
     (ngSubmit)="saveCategory()"
   >
-    <div>
+    <div class="field">
       <label for="title">Title:</label>
       <input type="text" [formControl]="title" />
 
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="field">
       <label for="description">Description:</label>
       <input type="text" [formControl]="description" />
 
@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="field">
       <label for="description">Css color:</label>
       <input type="text" [formControl]="css_color" />
 
@@ -54,7 +54,9 @@
           [ngClass]="'error'"
         >
           <div *ngIf="css_color.errors.required">Css color is required</div>
-
+          <div *ngIf="css_color.errors.pattern">
+            Css color not a valid format.
+          </div>
           <div *ngIf="css_color.errors.maxlength">
             Css color can be max 7 characters long.
           </div>
@@ -62,6 +64,6 @@
       </div>
     </div>
 
-    <button type="submit">SAVE</button>
+    <button type="submit">Save</button>
   </form>
 </div>

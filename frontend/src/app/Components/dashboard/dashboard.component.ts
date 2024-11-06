@@ -6,35 +6,29 @@ import { SharedService } from 'src/app/Services/shared.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  posts!: PostDTO[];
-
-  numLikes: number = 0;
-  numDislikes: number = 0;
+  numLikes = 0;
+  numDislikes = 0;
 
   constructor(
     private postService: PostService,
     private sharedService: SharedService
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    await this.loadPosts();
-
-    this.posts.forEach((post) => {
-      this.numLikes = this.numLikes + post.num_likes;
-      this.numDislikes = this.numDislikes + post.num_dislikes;
-    });
-  }
-
-  private async loadPosts(): Promise<void> {
-    let errorResponse: any;
-    try {
-      this.posts = await this.postService.getPosts();
-    } catch (error: any) {
-      errorResponse = error.error;
-      this.sharedService.errorLog(errorResponse);
-    }
+  ngOnInit(): void {
+    this.postService.getPosts().subscribe(
+      (posts: PostDTO[]) => {
+        posts.forEach((post) => {
+          this.numLikes = this.numLikes + post.num_likes;
+          this.numDislikes = this.numDislikes + post.num_dislikes;
+        });
+      },
+      (error: any) => {
+        const errorResponse = error.error;
+        this.sharedService.errorLog(errorResponse);
+      }
+    );
   }
 }

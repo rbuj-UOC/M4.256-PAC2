@@ -2,12 +2,16 @@
   color: red;
 }
 
+.feedbackContainer {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #registerFeedback {
   visibility: hidden;
   min-width: 250px;
   color: #fff;
   text-align: center;
-  border-radius: 10px;
   padding: 16px;
   z-index: 1;
   font-size: 14px;
@@ -25,8 +29,12 @@
 
 #registerFeedback.show {
   visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  -webkit-animation:
+    fadein 0.5s,
+    fadeout 0.5s 2.5s;
+  animation:
+    fadein 0.5s,
+    fadeout 0.5s 2.5s;
 }
 
 @-webkit-keyframes fadein {
@@ -71,4 +79,28 @@
     bottom: 0;
     opacity: 0;
   }
+}
+
+.field {
+  margin: 6px 0;
+}
+
+button {
+  background-color: #04aa6d; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  display: block;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background-color: #026641;
 }
