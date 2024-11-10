@@ -6,8 +6,8 @@ import {
   Validators
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { login } from 'src/app/auth.action';
-import { AuthDTO } from 'src/app/Models/auth.dto';
+import { login } from '../actions';
+import { AuthDTO } from '../models/auth.dto';
 
 @Component({
   selector: 'app-login',

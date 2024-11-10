@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthDTO } from '../Models/auth.dto';
+import { AuthDTO } from '../models/auth.dto';
 
 interface AuthToken {
   user_id: string;

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map } from 'rxjs/operators';
-import { login, loginFailure, loginSuccess } from './auth.action';
-import { AuthDTO } from './Models/auth.dto';
-import { AuthService } from './Services/auth.service';
+import { login, loginFailure, loginSuccess } from '../actions';
+import { AuthDTO } from '../models/auth.dto';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
