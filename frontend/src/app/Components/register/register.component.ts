@@ -7,10 +7,9 @@ import {
   Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { finalize } from 'rxjs/operators';
-import { HeaderMenus } from 'src/app/Models/header-menus.dto';
 import { UserDTO } from 'src/app/Models/user.dto';
-import { HeaderMenusService } from 'src/app/Services/header-menus.service';
 import { SharedService } from 'src/app/Services/shared.service';
 import { UserService } from 'src/app/Services/user.service';
 
@@ -37,7 +36,7 @@ export class RegisterComponent {
     private formBuilder: UntypedFormBuilder,
     private userService: UserService,
     private sharedService: SharedService,
-    private headerMenusService: HeaderMenusService,
+    private store: Store,
     private router: Router
   ) {
     this.registerUser = new UserDTO('', '', '', '', new Date(), '', '');
@@ -130,11 +129,6 @@ export class RegisterComponent {
         (error: any) => {
           responseOK = false;
           errorResponse = error.error;
-          const headerInfo: HeaderMenus = {
-            showAuthSection: false,
-            showNoAuthSection: true
-          };
-          this.headerMenusService.headerManagement.next(headerInfo);
           this.sharedService.errorLog(errorResponse);
         }
       );

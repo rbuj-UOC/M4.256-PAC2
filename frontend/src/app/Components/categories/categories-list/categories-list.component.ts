@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectUserId } from 'src/app/app.selectors';
 import { CategoryDTO } from 'src/app/Models/category.dto';
 import { CategoryService } from 'src/app/Services/category.service';
-import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { SharedService } from 'src/app/Services/shared.service';
 
 @Component({
@@ -16,25 +17,27 @@ export class CategoriesListComponent {
   constructor(
     private categoryService: CategoryService,
     private router: Router,
-    private localStorageService: LocalStorageService,
+    private store: Store,
     private sharedService: SharedService
   ) {
     this.loadCategories();
   }
 
   private loadCategories(): void {
-    const userId: string | null = this.localStorageService.get('user_id');
-    if (userId) {
-      this.categoryService.getCategoriesByUserId(userId).subscribe(
-        (categories: CategoryDTO[]) => {
-          this.categories = categories;
-        },
-        (error: any) => {
-          const errorResponse: any = error.error;
-          this.sharedService.errorLog(errorResponse);
-        }
-      );
-    }
+    const userId$ = this.store.select(selectUserId);
+    userId$.subscribe((userId) => {
+      if (userId) {
+        this.categoryService.getCategoriesByUserId(userId).subscribe(
+          (categories: CategoryDTO[]) => {
+            this.categories = categories;
+          },
+          (error: any) => {
+            const errorResponse: any = error.error;
+            this.sharedService.errorLog(errorResponse);
+          }
+        );
+      }
+    });
   }
 
   createCategory(): void {

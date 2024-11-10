@@ -7,11 +7,12 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { finalize } from 'rxjs/operators';
+import { selectUserId } from 'src/app/app.selectors';
 import { CategoryDTO } from 'src/app/Models/category.dto';
 import { PostDTO } from 'src/app/Models/post.dto';
 import { CategoryService } from 'src/app/Services/category.service';
-import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { PostService } from 'src/app/Services/post.service';
 import { SharedService } from 'src/app/Services/shared.service';
 
@@ -37,6 +38,7 @@ export class PostFormComponent implements OnInit {
   private postId: string | null;
 
   categoriesList!: CategoryDTO[];
+  userId!: string | null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -44,7 +46,7 @@ export class PostFormComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private sharedService: SharedService,
-    private localStorageService: LocalStorageService,
+    private store: Store,
     private categoryService: CategoryService
   ) {
     this.isValidForm = null;
@@ -87,21 +89,26 @@ export class PostFormComponent implements OnInit {
   }
 
   private loadCategories() {
-    const userId: string | null = this.localStorageService.get('user_id');
-    if (userId) {
-      this.categoryService.getCategoriesByUserId(userId).subscribe(
-        (categoriesList) => {
-          this.categoriesList = categoriesList;
-        },
-        (error: any) => {
-          const errorResponse = error.error;
-          this.sharedService.errorLog(errorResponse);
-        }
-      );
-    }
+    this.store.select(selectUserId).subscribe((userId) => {
+      if (userId) {
+        this.categoryService.getCategoriesByUserId(userId).subscribe(
+          (categoriesList) => {
+            this.categoriesList = categoriesList;
+          },
+          (error: any) => {
+            const errorResponse = error.error;
+            this.sharedService.errorLog(errorResponse);
+          }
+        );
+      }
+    });
   }
 
   ngOnInit(): void {
+    this.store
+      .select(selectUserId)
+      .subscribe((userId) => (this.userId = userId));
+
     // update
     if (this.postId) {
       this.isUpdateMode = true;
@@ -140,9 +147,8 @@ export class PostFormComponent implements OnInit {
   private editPost(): void {
     let errorResponse: any;
     if (this.postId) {
-      const userId: string | null = this.localStorageService.get('user_id');
-      if (userId) {
-        this.post.userId = userId;
+      if (this.userId) {
+        this.post.userId = this.userId;
         this.postService
           .updatePost(this.postId, this.post)
           .pipe(
@@ -176,9 +182,8 @@ export class PostFormComponent implements OnInit {
 
   private createPost(): void {
     let errorResponse: any;
-    const userId: string | null = this.localStorageService.get('user_id');
-    if (userId) {
-      this.post.userId = userId;
+    if (this.userId) {
+      this.post.userId = this.userId;
       this.postService
         .createPost(this.post)
         .pipe(

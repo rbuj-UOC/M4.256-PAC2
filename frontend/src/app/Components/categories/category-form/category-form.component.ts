@@ -6,10 +6,11 @@ import {
   Validators
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { finalize } from 'rxjs/operators';
+import { selectUserId } from 'src/app/app.selectors';
 import { CategoryDTO } from 'src/app/Models/category.dto';
 import { CategoryService } from 'src/app/Services/category.service';
-import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { SharedService } from 'src/app/Services/shared.service';
 
 @Component({
@@ -29,6 +30,7 @@ export class CategoryFormComponent implements OnInit {
   private isUpdateMode: boolean;
   private validRequest: boolean;
   private categoryId: string | null;
+  userId!: string | null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -36,7 +38,7 @@ export class CategoryFormComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private sharedService: SharedService,
-    private localStorageService: LocalStorageService
+    private store: Store
   ) {
     this.isValidForm = null;
     this.categoryId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -68,6 +70,10 @@ export class CategoryFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store
+      .select(selectUserId)
+      .subscribe((userId) => (this.userId = userId));
+
     // update
     if (this.categoryId) {
       this.isUpdateMode = true;
@@ -94,9 +100,8 @@ export class CategoryFormComponent implements OnInit {
   private editCategory(): void {
     let errorResponse: any;
     if (this.categoryId) {
-      const userId: string | null = this.localStorageService.get('user_id');
-      if (userId) {
-        this.category.userId = userId;
+      if (this.userId) {
+        this.category.userId = this.userId;
         this.categoryService
           .updateCategory(this.categoryId, this.category)
           .pipe(
@@ -130,9 +135,8 @@ export class CategoryFormComponent implements OnInit {
 
   private createCategory(): void {
     let errorResponse: any;
-    const userId: string | null = this.localStorageService.get('user_id');
-    if (userId) {
-      this.category.userId = userId;
+    if (this.userId) {
+      this.category.userId = this.userId;
       this.categoryService
         .createCategory(this.category)
         .pipe(

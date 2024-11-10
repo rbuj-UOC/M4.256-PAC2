@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { selectUserId } from 'src/app/app.selectors';
 import { PostDTO } from 'src/app/Models/post.dto';
-import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { PostService } from 'src/app/Services/post.service';
 import { SharedService } from 'src/app/Services/shared.service';
 
@@ -12,28 +13,31 @@ import { SharedService } from 'src/app/Services/shared.service';
 })
 export class PostsListComponent {
   posts!: PostDTO[];
+
   constructor(
     private postService: PostService,
     private router: Router,
-    private localStorageService: LocalStorageService,
+    private store: Store,
     private sharedService: SharedService
   ) {
     this.loadPosts();
   }
 
   private loadPosts(): void {
-    const userId: string | null = this.localStorageService.get('user_id');
-    if (userId) {
-      this.postService.getPostsByUserId(userId).subscribe(
-        (posts: PostDTO[]) => {
-          this.posts = posts;
-        },
-        (error: any) => {
-          const errorResponse = error.error;
-          this.sharedService.errorLog(errorResponse);
-        }
-      );
-    }
+    const userId$ = this.store.select(selectUserId);
+    userId$.subscribe((userId) => {
+      if (userId) {
+        this.postService.getPostsByUserId(userId).subscribe(
+          (posts: PostDTO[]) => {
+            this.posts = posts;
+          },
+          (error: any) => {
+            const errorResponse = error.error;
+            this.sharedService.errorLog(errorResponse);
+          }
+        );
+      }
+    });
   }
 
   createPost(): void {

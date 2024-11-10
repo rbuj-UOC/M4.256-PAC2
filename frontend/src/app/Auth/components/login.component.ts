@@ -23,13 +23,6 @@ export class LoginComponent {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private store: Store
-    /*
-    private authService: AuthService,
-    private sharedService: SharedService,
-    private headerMenusService: HeaderMenusService,
-    private localStorageService: LocalStorageService,
-    private router: Router
-*/
   ) {
     this.loginUser = new AuthDTO('', '', '', '');
 
@@ -51,7 +44,7 @@ export class LoginComponent {
   }
 
   login(): void {
-    const auth = new AuthDTO('', '', this.email.value, this.password.value);
+    const auth = new AuthDTO(null, null, this.email.value, this.password.value);
     this.store.dispatch(login({ auth }));
   }
 }
