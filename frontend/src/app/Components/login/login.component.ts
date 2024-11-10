@@ -5,14 +5,9 @@ import {
   UntypedFormGroup,
   Validators
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { login } from 'src/app/auth.action';
 import { AuthDTO } from 'src/app/Models/auth.dto';
-import { HeaderMenus } from 'src/app/Models/header-menus.dto';
-import { AuthService } from 'src/app/Services/auth.service';
-import { HeaderMenusService } from 'src/app/Services/header-menus.service';
-import { LocalStorageService } from 'src/app/Services/local-storage.service';
-import { SharedService } from 'src/app/Services/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -27,11 +22,14 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
+    private store: Store
+    /*
     private authService: AuthService,
     private sharedService: SharedService,
     private headerMenusService: HeaderMenusService,
     private localStorageService: LocalStorageService,
     private router: Router
+*/
   ) {
     this.loginUser = new AuthDTO('', '', '', '');
 
@@ -53,52 +51,7 @@ export class LoginComponent {
   }
 
   login(): void {
-    let responseOK = false;
-    let errorResponse: any;
-
-    this.loginUser.email = this.email.value;
-    this.loginUser.password = this.password.value;
-    this.authService
-      .login(this.loginUser)
-      .pipe(
-        finalize(() => {
-          this.sharedService
-            .managementToast('loginFeedback', responseOK, errorResponse)
-            .finally(() => {
-              if (responseOK) {
-                const headerInfo: HeaderMenus = {
-                  showAuthSection: true,
-                  showNoAuthSection: false
-                };
-                // update options menu
-                this.headerMenusService.headerManagement.next(headerInfo);
-                this.router.navigateByUrl('home');
-              }
-            });
-        })
-      )
-      .subscribe(
-        (authToken) => {
-          responseOK = true;
-          this.loginUser.user_id = authToken.user_id;
-          this.loginUser.access_token = authToken.access_token;
-          // save token to localstorage for next requests
-          this.localStorageService.set('user_id', this.loginUser.user_id);
-          this.localStorageService.set(
-            'access_token',
-            this.loginUser.access_token
-          );
-        },
-        (error: any) => {
-          responseOK = false;
-          errorResponse = error.error;
-          const headerInfo: HeaderMenus = {
-            showAuthSection: false,
-            showNoAuthSection: true
-          };
-          this.headerMenusService.headerManagement.next(headerInfo);
-          this.sharedService.errorLog(error.error);
-        }
-      );
+    const auth = new AuthDTO('', '', this.email.value, this.password.value);
+    this.store.dispatch(login({ auth }));
   }
 }
