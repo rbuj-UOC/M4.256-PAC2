@@ -1,3 +1,4 @@
+[![Node.js CI](https://github.com/rbuj-UOC/M4.256-PAC2/actions/workflows/node.js.yml/badge.svg)](https://github.com/rbuj-UOC/M4.256-PAC2/actions/workflows/node.js.yml)
 # PAC 2
 
 ## Prerequisits
