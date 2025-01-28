@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { PostDTO } from 'src/app/Models/post.dto';
-import { PostService } from 'src/app/Services/post.service';
-import { SharedService } from 'src/app/Services/shared.service';
+import { PostDTO } from '../../Models/post.dto';
+import { PostService } from '../../Services/post.service';
+import { SharedService } from '../../Services/shared.service';
 
 @Component({
   selector: 'app-dashboard',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

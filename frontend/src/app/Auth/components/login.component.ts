@@ -11,6 +11,8 @@ import { AuthDTO } from '../models/auth.dto';
 
 @Component({
   selector: 'app-login',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

@@ -8,13 +8,15 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { finalize } from 'rxjs/operators';
-import { selectUserId } from 'src/app/app.selectors';
-import { UserDTO } from 'src/app/Models/user.dto';
-import { SharedService } from 'src/app/Services/shared.service';
-import { UserService } from 'src/app/Services/user.service';
+import { selectUserId } from '../../app.selectors';
+import { UserDTO } from '../../Models/user.dto';
+import { SharedService } from '../../Services/shared.service';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-profile',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })

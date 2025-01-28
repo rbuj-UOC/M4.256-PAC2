@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectUserId } from 'src/app/app.selectors';
-import { logout } from 'src/app/Auth/actions';
+import { selectUserId } from '../../app.selectors';
+import { logout } from '../../Auth/actions';
 
 @Component({
   selector: 'app-header',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
   showAuthSection: boolean;
   showNoAuthSection: boolean;
-  userId$ = this.store.select(selectUserId);
+  userId$: any;
 
   constructor(
     private router: Router,
@@ -20,6 +22,7 @@ export class HeaderComponent implements OnInit {
   ) {
     this.showAuthSection = false;
     this.showNoAuthSection = true;
+    this.userId$ = this.store.select(selectUserId);
   }
 
   ngOnInit(): void {

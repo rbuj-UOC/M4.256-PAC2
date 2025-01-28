@@ -14,7 +14,7 @@
 
       <div *ngIf="title.errors">
         <div
-          *ngIf="title.errors && isValidForm != null && !isValidForm"
+          *ngIf="title.errors && isValidForm !== null && !isValidForm"
           [ngClass]="'error'"
         >
           <div *ngIf="title.errors.required">Title is required</div>
@@ -32,7 +32,7 @@
 
       <div *ngIf="description.errors">
         <div
-          *ngIf="description.errors && isValidForm != null && !isValidForm"
+          *ngIf="description.errors && isValidForm !== null && !isValidForm"
           [ngClass]="'error'"
         >
           <div *ngIf="description.errors.required">Description is required</div>
@@ -50,7 +50,7 @@
 
       <div *ngIf="css_color.errors">
         <div
-          *ngIf="css_color.errors && isValidForm != null && !isValidForm"
+          *ngIf="css_color.errors && isValidForm !== null && !isValidForm"
           [ngClass]="'error'"
         >
           <div *ngIf="css_color.errors.required">Css color is required</div>

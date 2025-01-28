@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectUserId } from 'src/app/app.selectors';
-import { CategoryDTO } from 'src/app/Models/category.dto';
-import { CategoryService } from 'src/app/Services/category.service';
-import { SharedService } from 'src/app/Services/shared.service';
+import { selectUserId } from '../../../app.selectors';
+import { CategoryDTO } from '../../../Models/category.dto';
+import { CategoryService } from '../../../Services/category.service';
+import { SharedService } from '../../../Services/shared.service';
 
 @Component({
   selector: 'app-categories-list',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.scss']
 })

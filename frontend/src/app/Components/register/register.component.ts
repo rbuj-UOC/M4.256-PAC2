@@ -9,12 +9,14 @@ import {
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { finalize } from 'rxjs/operators';
-import { UserDTO } from 'src/app/Models/user.dto';
-import { SharedService } from 'src/app/Services/shared.service';
-import { UserService } from 'src/app/Services/user.service';
+import { UserDTO } from '../../Models/user.dto';
+import { SharedService } from '../../Services/shared.service';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-register',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })

@@ -1,20 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectUserId } from 'src/app/app.selectors';
-import { PostDTO } from 'src/app/Models/post.dto';
-import { PostService } from 'src/app/Services/post.service';
-import { SharedService } from 'src/app/Services/shared.service';
+import { selectUserId } from '../../app.selectors';
+import { PostDTO } from '../../Models/post.dto';
+import { PostService } from '../../Services/post.service';
+import { SharedService } from '../../Services/shared.service';
 
 @Component({
   selector: 'app-home',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   posts!: PostDTO[];
   showButtons: boolean;
-  userId$ = this.store.select(selectUserId);
+  userId$: any;
 
   constructor(
     private postService: PostService,
@@ -22,6 +24,7 @@ export class HomeComponent {
     private sharedService: SharedService,
     private router: Router
   ) {
+    this.userId$ = this.store.select(selectUserId);
     this.showButtons = false;
     this.loadPosts();
   }

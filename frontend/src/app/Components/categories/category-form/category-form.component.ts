@@ -8,13 +8,15 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { finalize } from 'rxjs/operators';
-import { selectUserId } from 'src/app/app.selectors';
-import { CategoryDTO } from 'src/app/Models/category.dto';
-import { CategoryService } from 'src/app/Services/category.service';
-import { SharedService } from 'src/app/Services/shared.service';
+import { selectUserId } from '../../../app.selectors';
+import { CategoryDTO } from '../../../Models/category.dto';
+import { CategoryService } from '../../../Services/category.service';
+import { SharedService } from '../../../Services/shared.service';
 
 @Component({
   selector: 'app-category-form',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false,
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.scss']
 })

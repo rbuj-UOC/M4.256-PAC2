@@ -10,7 +10,7 @@
 
       <div *ngIf="title.errors">
         <div
-          *ngIf="title.errors && isValidForm != null && !isValidForm"
+          *ngIf="title.errors && isValidForm !== null && !isValidForm"
           [ngClass]="'error'"
         >
           <div *ngIf="title.errors.required">Title is required</div>
@@ -28,7 +28,7 @@
 
       <div *ngIf="description.errors">
         <div
-          *ngIf="description.errors && isValidForm != null && !isValidForm"
+          *ngIf="description.errors && isValidForm !== null && !isValidForm"
           [ngClass]="'error'"
         >
           <div *ngIf="description.errors.required">Description is required</div>
@@ -44,7 +44,7 @@
       <label for="publicationDate">Publication date: </label>
       <input type="date" [formControl]="publication_date" />
       <div
-        *ngIf="publication_date.errors && isValidForm != null && !isValidForm"
+        *ngIf="publication_date.errors && isValidForm !== null && !isValidForm"
         [ngClass]="'error'"
       >
         <div *ngIf="publication_date.errors.required">

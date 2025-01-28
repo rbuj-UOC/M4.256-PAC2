@@ -13,9 +13,11 @@ import { selectAccessToken } from '../app.selectors';
   providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor {
-  access_token$ = this.store.select(selectAccessToken);
+  access_token$: Observable<string>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    this.access_token$ = this.store.select(selectAccessToken);
+  }
 
   intercept(
     req: HttpRequest<any>,

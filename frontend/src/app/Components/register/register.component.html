@@ -8,7 +8,7 @@
       <label for="name">Name: </label>
       <input type="text" [formControl]="name" />
       <div
-        *ngIf="name.errors && isValidForm != null && !isValidForm"
+        *ngIf="name.errors && isValidForm !== null && !isValidForm"
         [ngClass]="'error'"
       >
         <div *ngIf="name.errors.required">Name is required</div>
@@ -25,7 +25,7 @@
       <label for="surname1">Surname1: </label>
       <input type="text" [formControl]="surname_1" />
       <div
-        *ngIf="surname_1.errors && isValidForm != null && !isValidForm"
+        *ngIf="surname_1.errors && isValidForm !== null && !isValidForm"
         [ngClass]="'error'"
       >
         <div *ngIf="surname_1.errors.required">Surname1 is required</div>
@@ -42,7 +42,7 @@
       <label for="surname2">Surname2: </label>
       <input type="text" [formControl]="surname_2" />
       <div
-        *ngIf="surname_2.errors && isValidForm != null && !isValidForm"
+        *ngIf="surname_2.errors && isValidForm !== null && !isValidForm"
         [ngClass]="'error'"
       >
         <div *ngIf="surname_2.errors.minlength">
@@ -58,7 +58,7 @@
       <label for="alias">Alias: </label>
       <input type="text" [formControl]="alias" />
       <div
-        *ngIf="alias.errors && isValidForm != null && !isValidForm"
+        *ngIf="alias.errors && isValidForm !== null && !isValidForm"
         [ngClass]="'error'"
       >
         <div *ngIf="alias.errors.required">Alias is required</div>
@@ -75,7 +75,7 @@
       <label for="birthDate">Birth date: </label>
       <input type="date" [formControl]="birth_date" />
       <div
-        *ngIf="birth_date.errors && isValidForm != null && !isValidForm"
+        *ngIf="birth_date.errors && isValidForm !== null && !isValidForm"
         [ngClass]="'error'"
       >
         <div *ngIf="birth_date.errors.required">Birth date is required</div>
@@ -86,7 +86,7 @@
       <label for="email">Email: </label>
       <input type="email" [formControl]="email" />
       <div
-        *ngIf="email.errors && isValidForm != null && !isValidForm"
+        *ngIf="email.errors && isValidForm !== null && !isValidForm"
         [ngClass]="'error'"
       >
         <div *ngIf="email.errors.required">Email is required</div>
@@ -98,7 +98,7 @@
       <label for="password">Password: </label>
       <input type="password" [formControl]="password" />
       <div
-        *ngIf="password.errors && isValidForm != null && !isValidForm"
+        *ngIf="password.errors && isValidForm !== null && !isValidForm"
         [ngClass]="'error'"
       >
         <div *ngIf="password.errors.required">Password is required</div>
