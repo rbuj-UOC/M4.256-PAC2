@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { CategoryDTO } from '../Models/category.dto';
 
 interface deleteResponse {
@@ -16,12 +17,12 @@ export class CategoryService {
 
   constructor(private http: HttpClient) {
     this.controller = 'categories';
-    this.urlBlogUocApi = 'http://localhost:3000/' + this.controller;
+    this.urlBlogUocApi = environment.apiUrl + '/' + this.controller;
   }
 
   getCategoriesByUserId(userId: string): Observable<CategoryDTO[]> {
     return this.http.get<CategoryDTO[]>(
-      'http://localhost:3000/users/categories/' + userId
+      environment.apiUrl + '/users/categories/' + userId
     );
   }
 

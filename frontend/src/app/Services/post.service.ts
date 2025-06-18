@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { NONE_TYPE } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { PostDTO } from '../Models/post.dto';
 
 interface updateResponse {
@@ -21,7 +22,7 @@ export class PostService {
 
   constructor(private http: HttpClient) {
     this.controller = 'posts';
-    this.urlBlogUocApi = 'http://localhost:3000/' + this.controller;
+    this.urlBlogUocApi = environment.apiUrl + '/' + this.controller;
   }
 
   getPosts(): Observable<PostDTO[]> {
@@ -30,7 +31,7 @@ export class PostService {
 
   getPostsByUserId(userId: string): Observable<PostDTO[]> {
     return this.http.get<PostDTO[]>(
-      'http://localhost:3000/users/posts/' + userId
+      environment.apiUrl + '/users/posts/' + userId
     );
   }
 

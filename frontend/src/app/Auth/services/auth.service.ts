@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { AuthDTO } from '../models/auth.dto';
 
 interface AuthToken {
@@ -17,7 +18,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     this.controller = 'auth';
-    this.urlBlogUocApi = 'http://localhost:3000/' + this.controller;
+    this.urlBlogUocApi = environment.apiUrl + '/' + this.controller;
   }
 
   login(auth: AuthDTO): Observable<AuthToken> {
