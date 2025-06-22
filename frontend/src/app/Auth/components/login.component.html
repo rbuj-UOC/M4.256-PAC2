@@ -21,8 +21,7 @@
 <div *ngIf="email.errors">
   <span
     [ngClass]="'error'"
-    *ngIf="email.errors && (email.touched || email.dirty)"
-  >
+    *ngIf="email.errors && (email.touched || email.dirty)">
     <span *ngIf="email.errors.required">Email is required</span>
     <div *ngIf="email.errors.pattern">Email not a valid format.</div>
   </span>
@@ -31,8 +30,7 @@
 <div *ngIf="password.errors">
   <span
     [ngClass]="'error'"
-    *ngIf="password.errors && (password.touched || password.dirty)"
-  >
+    *ngIf="password.errors && (password.touched || password.dirty)">
     <span *ngIf="password.errors.required">Password is required</span>
     <span *ngIf="password.errors.minlength"
       >Password must be at least 8 characters long</span
