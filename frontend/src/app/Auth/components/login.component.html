@@ -18,25 +18,24 @@
   </form>
 </div>
 
-<div *ngIf="email.errors">
-  <span
-    [ngClass]="'error'"
-    *ngIf="email.errors && (email.touched || email.dirty)">
-    <span *ngIf="email.errors.required">Email is required</span>
-    <div *ngIf="email.errors.pattern">Email not a valid format.</div>
+@if (email.errors && (email.touched || email.dirty)) {
+  <span [ngClass]="'error'">
+    @if (email.errors.required) {
+      <span>Email is required</span>
+    } @else if (email.errors.pattern) {
+      <div>Email not a valid format.</div>
+    }
   </span>
-</div>
+}
 
-<div *ngIf="password.errors">
-  <span
-    [ngClass]="'error'"
-    *ngIf="password.errors && (password.touched || password.dirty)">
-    <span *ngIf="password.errors.required">Password is required</span>
-    <span *ngIf="password.errors.minlength"
-      >Password must be at least 8 characters long</span
-    >
-    <span *ngIf="password.errors.maxlength"
-      >Password can be max 16 characters long</span
-    >
+@if (password.errors && (password.touched || password.dirty)) {
+  <span [ngClass]="'error'">
+    @if (password.errors.required) {
+      <span>Password is required</span>
+    } @else if (password.errors.minlength) {
+      <span>Password must be at least 8 characters long</span>
+    } @else if (password.errors.maxlength) {
+      <span>Password can be max 16 characters long</span>
+    }
   </span>
-</div>
+}
