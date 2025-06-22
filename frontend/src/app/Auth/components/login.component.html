@@ -6,12 +6,12 @@
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="field">
       <label for="email">Email: </label>
-      <input type="email" [formControl]="email" />
+      <input id="email" type="email" [formControl]="email" />
     </div>
 
     <div class="field">
       <label for="password">Password: </label>
-      <input type="password" [formControl]="password" />
+      <input id="password" type="password" [formControl]="password" />
     </div>
 
     <button type="submit" [disabled]="!loginForm.valid">Login</button>
