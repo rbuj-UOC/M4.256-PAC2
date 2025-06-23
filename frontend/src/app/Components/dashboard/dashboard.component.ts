@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { PostDTO } from '../../Models/post.dto';
 import { PostService } from '../../Services/post.service';
 import { SharedService } from '../../Services/shared.service';
@@ -11,13 +11,11 @@ import { SharedService } from '../../Services/shared.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  private postService = inject(PostService);
+  private sharedService = inject(SharedService);
+
   numLikes = 0;
   numDislikes = 0;
-
-  constructor(
-    private postService: PostService,
-    private sharedService: SharedService
-  ) {}
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe(

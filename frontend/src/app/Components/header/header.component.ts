@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../app.selectors';
@@ -12,14 +12,14 @@ import { logout } from '../../Auth/actions';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  private router = inject(Router);
+  private store = inject(Store);
+
   showAuthSection: boolean;
   showNoAuthSection: boolean;
   userId$: any;
 
-  constructor(
-    private router: Router,
-    private store: Store
-  ) {
+  constructor() {
     this.showAuthSection = false;
     this.showNoAuthSection = true;
     this.userId$ = this.store.select(selectUserId);

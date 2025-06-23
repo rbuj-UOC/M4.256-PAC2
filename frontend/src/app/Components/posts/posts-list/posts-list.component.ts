@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../app.selectors';
@@ -14,14 +14,14 @@ import { SharedService } from '../../../Services/shared.service';
   styleUrls: ['./posts-list.component.scss']
 })
 export class PostsListComponent {
+  private postService = inject(PostService);
+  private router = inject(Router);
+  private store = inject(Store);
+  private sharedService = inject(SharedService);
+
   posts!: PostDTO[];
 
-  constructor(
-    private postService: PostService,
-    private router: Router,
-    private store: Store,
-    private sharedService: SharedService
-  ) {
+  constructor() {
     this.loadPosts();
   }
 

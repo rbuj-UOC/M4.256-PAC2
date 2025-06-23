@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
@@ -10,17 +10,17 @@ import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class AuthEffects {
+  private actions$ = inject(Actions);
+  private authService = inject(AuthService);
+  private sharedService = inject(SharedService);
+  private router = inject(Router);
+
   login$: any;
   loginSuccess$: any;
   loginFailure$: any;
   logout$: any;
 
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService,
-    private sharedService: SharedService,
-    private router: Router
-  ) {
+  constructor() {
     this.login$ = createEffect(() => {
       return this.actions$.pipe(
         ofType(login),

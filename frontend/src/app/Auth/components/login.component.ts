@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
@@ -17,15 +17,15 @@ import { AuthDTO } from '../models/auth.dto';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  private formBuilder = inject(UntypedFormBuilder);
+  private store = inject(Store);
+
   loginUser: AuthDTO;
   email: UntypedFormControl;
   password: UntypedFormControl;
   loginForm: UntypedFormGroup;
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private store: Store
-  ) {
+  constructor() {
     this.loginUser = new AuthDTO('', '', '', '');
 
     this.email = new UntypedFormControl('', [

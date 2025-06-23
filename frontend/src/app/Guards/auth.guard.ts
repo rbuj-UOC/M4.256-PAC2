@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -14,10 +14,9 @@ import { selectAccessToken } from '../app.selectors';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private router: Router,
-    private store: Store
-  ) {}
+  private router = inject(Router);
+  private store = inject(Store);
+
 
   canActivate(
     route: ActivatedRouteSnapshot,

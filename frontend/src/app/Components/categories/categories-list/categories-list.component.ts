@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../app.selectors';
@@ -14,14 +14,14 @@ import { SharedService } from '../../../Services/shared.service';
   styleUrls: ['./categories-list.component.scss']
 })
 export class CategoriesListComponent {
+  private categoryService = inject(CategoryService);
+  private router = inject(Router);
+  private store = inject(Store);
+  private sharedService = inject(SharedService);
+
   categories!: CategoryDTO[];
 
-  constructor(
-    private categoryService: CategoryService,
-    private router: Router,
-    private store: Store,
-    private sharedService: SharedService
-  ) {
+  constructor() {
     this.loadCategories();
   }
 

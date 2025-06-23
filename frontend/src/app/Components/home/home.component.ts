@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../app.selectors';
@@ -14,16 +14,16 @@ import { SharedService } from '../../Services/shared.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  private postService = inject(PostService);
+  private store = inject(Store);
+  private sharedService = inject(SharedService);
+  private router = inject(Router);
+
   posts!: PostDTO[];
   showButtons: boolean;
   userId$: any;
 
-  constructor(
-    private postService: PostService,
-    private store: Store,
-    private sharedService: SharedService,
-    private router: Router
-  ) {
+  constructor() {
     this.userId$ = this.store.select(selectUserId);
     this.showButtons = false;
     this.loadPosts();
